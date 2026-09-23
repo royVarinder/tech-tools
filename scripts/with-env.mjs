@@ -2,9 +2,13 @@ import { existsSync } from "node:fs";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 
-if (existsSync(".env.local")) {
-  process.loadEnvFile(".env.local");
+for (const envFile of [".env", ".env.local"]) {
+  if (existsSync(envFile)) {
+    process.loadEnvFile(envFile);
+  }
 }
+
+console.log(`[with-env] PORT=${process.env.PORT ?? "(default 3000)"}`);
 
 const [, , binPath, ...cliArgs] = process.argv;
 const resolvedBinPath = path.resolve(process.cwd(), binPath);
