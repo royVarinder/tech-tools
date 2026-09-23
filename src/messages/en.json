@@ -1,0 +1,97 @@
+{
+  "meta": {
+    "siteName": "ToolNest",
+    "tagline": "All the file tools you need, in one place."
+  },
+  "header": {
+    "searchPlaceholder": "Search tools...",
+    "tools": "Tools",
+    "login": "Log in",
+    "join": "Join free"
+  },
+  "home": {
+    "heroTitle": "Every tool to manage your files, free & online",
+    "heroWelcomeBack": "Welcome back, {name}",
+    "heroSubtitle": "Convert, merge, crop and build documents in seconds. No installs, works on any device.",
+    "heroSubtitleLoggedIn": "Pick up where you left off — all your tools are ready below.",
+    "getStarted": "Get started free",
+    "browseTools": "Browse tools",
+    "recentHeading": "Recently Used",
+    "recentSubheading": "Jump back into a tool you've already used",
+    "toolsHeading": "All Tools",
+    "toolsSubheading": "Pick a tool to get started",
+    "faqHeading": "Frequently Asked Questions"
+  },
+  "about": {
+    "title": "ToolNest — One Stop Solution For All Your Digital Work",
+    "paragraph1": "Welcome to ToolNest, a platform designed to simplify your everyday digital needs. Whether you are a student who needs to merge documents for an assignment, a professional who needs to create an instant resume, or a shopkeeper who needs ID card print services, our smart online tools are always ready to help you.",
+    "paragraph2": "At ToolNest, you don't need to install heavy software. All PDF tools, photo makers and card design services work directly in your browser. Our platform saves time, money and effort by giving everything in one place."
+  },
+  "whyChoose": {
+    "title": "Why Choose ToolNest?",
+    "card1Title": "Simple And Fast",
+    "card1Desc": "All tools on ToolNest are very simple. You can complete your work in just a few seconds without any technical knowledge.",
+    "card2Title": "Everything In One Place",
+    "card2Desc": "From PDF converters to ID card makers and design tools, ToolNest gives you solutions for all your needs in one platform.",
+    "card3Title": "Safe And Reliable",
+    "card3Desc": "Your privacy is our priority. When server processing is required, only the selected file is securely sent to complete the requested task, and temporary processing copies are removed afterwards.",
+    "card4Title": "Affordable And Transparent",
+    "card4Desc": "Most services on ToolNest are free to use, with no hidden charges."
+  },
+  "auth": {
+    "welcomeHeading": "Welcome to ToolNest",
+    "loginTitle": "Welcome back",
+    "loginSubtitle": "Sign in to access your saved tools and history",
+    "signupTitle": "Create your account",
+    "signupSubtitle": "Join free and start converting files in seconds",
+    "name": "Full name",
+    "email": "Email address",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "rememberMe": "Remember me",
+    "terms": "I agree to the Terms & Conditions",
+    "loginButton": "Log in",
+    "signupButton": "Create account",
+    "switchToSignup": "Don't have an account?",
+    "switchToLogin": "Already have an account?",
+    "signupLink": "Join free",
+    "loginLink": "Log in",
+    "close": "Close",
+    "passwordMismatch": "Passwords do not match.",
+    "acceptTermsError": "Please accept the Terms & Conditions to continue."
+  },
+  "faq": {
+    "q1": "Are these tools free to use?",
+    "a1": "Yes, all tools on ToolNest are completely free to use, with no hidden charges.",
+    "q2": "Is my data safe?",
+    "a2": "Most tools process your files directly in your browser, so your files never leave your device.",
+    "q3": "Do I need to create an account?",
+    "a3": "No account is required to use the tools, but signing up lets you save your history and preferences.",
+    "q4": "Which file formats are supported?",
+    "a4": "We support JPG, PNG and PDF conversions, merging, page deletion, cropping and resizing, with more formats coming soon.",
+    "q5": "Can I use ToolNest on my phone?",
+    "a5": "Yes, ToolNest is fully responsive and works great on mobile, tablet and desktop."
+  },
+  "footer": {
+    "rights": "All rights reserved."
+  },
+  "tools": {
+    "jpg-to-pdf": { "name": "JPG to PDF", "description": "Convert JPG images into a single PDF document." },
+    "pdf-to-jpg": { "name": "PDF to JPG", "description": "Extract pages of a PDF as JPG images." },
+    "png-to-pdf": { "name": "PNG to PDF", "description": "Convert PNG images into a single PDF document." },
+    "png-to-jpg": { "name": "PNG to JPG", "description": "Convert a PNG image into JPG format." },
+    "delete-pdf-page": { "name": "Delete PDF Page", "description": "Remove unwanted pages from a PDF file." },
+    "merge-pdf": { "name": "Merge PDF", "description": "Combine multiple PDF files into one document." },
+    "photo-crop-resize": { "name": "Photo Crop & Resize", "description": "Crop and resize your photos to any dimension." },
+    "resume-maker": { "name": "Resume Maker", "description": "Build a professional resume and download it as PDF." },
+    "passport-photo": { "name": "Passport Photo Maker", "description": "Crop your photo to passport, PAN or custom size and download a ready-to-print sheet." },
+    "id-card-print": { "name": "ID Card Print", "description": "Upload your ID card front & back and print a ready-to-cut sheet with multiple copies." }
+  },
+  "common": {
+    "back": "Back to tools",
+    "upload": "Click or drag file to upload",
+    "download": "Download",
+    "processing": "Processing...",
+    "reset": "Start over"
+  }
+}

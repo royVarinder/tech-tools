@@ -6,12 +6,26 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "seed": "node scripts/seed-tools.mjs && node scripts/seed-home-content.mjs",
+    "seed:tools": "node scripts/seed-tools.mjs",
+    "seed:content": "node scripts/seed-home-content.mjs"
   },
   "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "mongoose": "^9.10.1",
     "next": "16.3.5",
+    "next-auth": "^5.0.0-beta.32",
+    "next-intl": "^4.14.5",
+    "next-themes": "^0.4.6",
+    "pdf-lib": "^1.17.1",
+    "pdfjs-dist": "^5.6.205",
     "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "react-dom": "19.2.8",
+    "react-hook-form": "^7.88.0",
+    "react-icons": "^5.7.0",
+    "react-image-crop": "^11.1.2",
+    "zod": "^4.6.5"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

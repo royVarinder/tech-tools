@@ -1,26 +1,122 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fafafa;
+  --surface: #ffffff;
+  --surface-soft: #f2f4f2;
+  --border: #e2e6e2;
+  --foreground: #0c0c0d;
+  --muted: #5b615c;
+  --dim: #9aa39d;
+  --brand: #2f9d63;
+  --brand-bright: #12a860;
+  --brand-light: #9fcfb4;
+  --brand-muted: #6b8a78;
+  --danger: #e40014;
+}
+
+.dark {
+  --background: #0c0c0d;
+  --surface: #1e1f20;
+  --surface-soft: #141516;
+  --border: #304338;
+  --foreground: #fafafa;
+  --muted: #afb0b7;
+  --dim: #45474f;
+  --brand: #539f75;
+  --brand-bright: #43f993;
+  --brand-light: #9fcfb4;
+  --brand-muted: #708c7c;
+  --danger: #fb2c36;
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-soft: var(--surface-soft);
+  --color-border: var(--border);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-muted: var(--muted);
+  --color-dim: var(--dim);
+  --color-brand: var(--brand);
+  --color-brand-bright: var(--brand-bright);
+  --color-brand-light: var(--brand-light);
+  --color-brand-muted: var(--brand-muted);
+  --color-danger: var(--danger);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-hanken), var(--font-inter), ui-sans-serif, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.brand-pill-btn {
+  background-color: var(--color-brand-light);
+  color: #0c0c0d;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  transition: filter 0.15s, transform 50ms;
+}
+
+.brand-pill-btn:hover {
+  filter: brightness(1.05);
+}
+
+.brand-pill-btn:active {
+  transform: scale(0.98);
+}
+
+.brand-input {
+  background-color: var(--color-surface-soft);
+  border: 1px solid var(--color-border);
+  color: var(--color-foreground);
+  border-radius: 9999px;
+  outline: none;
+  transition: box-shadow 0.15s, border-color 0.15s;
+}
+
+.brand-input:focus {
+  border-color: var(--color-brand-light);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-brand) 22%, transparent);
+}
+
+.brand-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 1.5rem;
+}
+
+.auth-bg-glow {
+  background-color: var(--color-background);
+  background-image:
+    radial-gradient(circle at 12% 8%, color-mix(in srgb, var(--color-brand) 16%, transparent), transparent 40%),
+    radial-gradient(circle at 88% 30%, color-mix(in srgb, var(--color-brand-light) 12%, transparent), transparent 38%);
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.accordion-row {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease;
+}
+
+.accordion-row.is-open {
+  grid-template-rows: 1fr;
+}
+
+.accordion-row > div {
+  overflow: hidden;
+  min-height: 0;
 }
