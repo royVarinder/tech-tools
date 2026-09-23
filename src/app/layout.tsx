@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "ToolNest",
+  title: "PrintBro",
   description: "All the file tools you need, in one place.",
 };
 

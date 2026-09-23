@@ -137,7 +137,7 @@ export interface FaqSeed {
 export const HOME_FAQS: FaqSeed[] = [
   {
     question: "Are these tools free to use?",
-    answer: "Yes, all tools on ToolNest are completely free to use, with no hidden charges.",
+    answer: "Yes, all tools on PrintBro are completely free to use, with no hidden charges.",
     order: 0,
   },
   {
@@ -157,8 +157,8 @@ export const HOME_FAQS: FaqSeed[] = [
     order: 3,
   },
   {
-    question: "Can I use ToolNest on my phone?",
-    answer: "Yes, ToolNest is fully responsive and works great on mobile, tablet and desktop.",
+    question: "Can I use PrintBro on my phone?",
+    answer: "Yes, PrintBro is fully responsive and works great on mobile, tablet and desktop.",
     order: 4,
   },
 ];

@@ -141,7 +141,7 @@ export default function IdCardPrint() {
               type="button"
               disabled={busy}
               onClick={downloadCombinedSheet}
-              className="rounded-xl brand-pill-btn py-3 transition hover:scale-[1.02] disabled:opacity-50 disabled:hover:scale-100 sm:px-8"
+              className="w-full rounded-xl brand-pill-btn py-3 transition hover:scale-[1.02] disabled:opacity-50 disabled:hover:scale-100 sm:w-auto sm:px-8"
             >
               {busy ? t("processing") : backSrc ? "Download Print Sheet (Front + Back)" : "Download Print Sheet"}
             </button>

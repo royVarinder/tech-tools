@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { signIn } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
@@ -73,10 +74,7 @@ export default function AuthCard({ mode }: { mode: Mode }) {
   return (
     <div className="auth-bg-glow relative flex min-h-screen w-full items-center justify-center px-4 py-10">
       <Link href="/" className="absolute left-6 top-6 flex items-center gap-2 sm:left-10 sm:top-8">
-        <span className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-light text-sm font-bold text-[#0c0c0d]">
-          T
-        </span>
-        <span className="font-heading text-lg font-bold tracking-wide text-foreground">ToolNest</span>
+        <Image src="/applogo.png" alt="PrintBro" width={175} height={70} className="h-8 w-auto sm:h-9" />
       </Link>
 
       <div className="brand-card relative w-full max-w-md p-8 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.6)] sm:p-10">

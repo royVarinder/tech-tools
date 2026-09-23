@@ -77,7 +77,7 @@ export default function ImageToPdf({ format }: { format: "jpg" | "png" }) {
               <button
                 type="button"
                 onClick={() => removeFile(entry.id)}
-                className="absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded-full bg-background/90 opacity-0 shadow transition-all duration-200 hover:scale-110 group-hover:opacity-100"
+                className="absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded-full bg-background/90 shadow transition-all duration-200 hover:scale-110 sm:opacity-0 sm:group-hover:opacity-100"
                 aria-label="Remove"
               >
                 <FcCancel className="h-4 w-4" />

@@ -194,12 +194,12 @@ export default function PassportPhoto() {
             </button>
           </div>
 
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-col flex-wrap gap-3 sm:flex-row">
             <button
               type="button"
               disabled={busy}
               onClick={downloadPhoto}
-              className="rounded-xl brand-pill-btn py-3 transition hover:scale-[1.02] disabled:opacity-50 disabled:hover:scale-100 sm:px-8"
+              className="w-full rounded-xl brand-pill-btn py-3 transition hover:scale-[1.02] disabled:opacity-50 disabled:hover:scale-100 sm:w-auto sm:px-8"
             >
               {busy ? t("processing") : "Download Photo"}
             </button>
@@ -207,7 +207,7 @@ export default function PassportPhoto() {
               type="button"
               disabled={busy}
               onClick={downloadSheet}
-              className="rounded-xl border border-border px-6 py-3 text-sm font-medium text-foreground transition hover:bg-surface-soft disabled:opacity-50"
+              className="w-full rounded-xl border border-border px-6 py-3 text-sm font-medium text-foreground transition hover:bg-surface-soft disabled:opacity-50 sm:w-auto"
             >
               {busy ? t("processing") : "Download Print Sheet (6x4in)"}
             </button>

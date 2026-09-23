@@ -1,6 +1,6 @@
 {
   "meta": {
-    "siteName": "ToolNest",
+    "siteName": "PrintBro",
     "tagline": "All the file tools you need, in one place."
   },
   "header": {
@@ -23,23 +23,23 @@
     "faqHeading": "Frequently Asked Questions"
   },
   "about": {
-    "title": "ToolNest — One Stop Solution For All Your Digital Work",
-    "paragraph1": "Welcome to ToolNest, a platform designed to simplify your everyday digital needs. Whether you are a student who needs to merge documents for an assignment, a professional who needs to create an instant resume, or a shopkeeper who needs ID card print services, our smart online tools are always ready to help you.",
-    "paragraph2": "At ToolNest, you don't need to install heavy software. All PDF tools, photo makers and card design services work directly in your browser. Our platform saves time, money and effort by giving everything in one place."
+    "title": "PrintBro — One Stop Solution For All Your Digital Work",
+    "paragraph1": "Welcome to PrintBro, a platform designed to simplify your everyday digital needs. Whether you are a student who needs to merge documents for an assignment, a professional who needs to create an instant resume, or a shopkeeper who needs ID card print services, our smart online tools are always ready to help you.",
+    "paragraph2": "At PrintBro, you don't need to install heavy software. All PDF tools, photo makers and card design services work directly in your browser. Our platform saves time, money and effort by giving everything in one place."
   },
   "whyChoose": {
-    "title": "Why Choose ToolNest?",
+    "title": "Why Choose PrintBro?",
     "card1Title": "Simple And Fast",
-    "card1Desc": "All tools on ToolNest are very simple. You can complete your work in just a few seconds without any technical knowledge.",
+    "card1Desc": "All tools on PrintBro are very simple. You can complete your work in just a few seconds without any technical knowledge.",
     "card2Title": "Everything In One Place",
-    "card2Desc": "From PDF converters to ID card makers and design tools, ToolNest gives you solutions for all your needs in one platform.",
+    "card2Desc": "From PDF converters to ID card makers and design tools, PrintBro gives you solutions for all your needs in one platform.",
     "card3Title": "Safe And Reliable",
     "card3Desc": "Your privacy is our priority. When server processing is required, only the selected file is securely sent to complete the requested task, and temporary processing copies are removed afterwards.",
     "card4Title": "Affordable And Transparent",
-    "card4Desc": "Most services on ToolNest are free to use, with no hidden charges."
+    "card4Desc": "Most services on PrintBro are free to use, with no hidden charges."
   },
   "auth": {
-    "welcomeHeading": "Welcome to ToolNest",
+    "welcomeHeading": "Welcome to PrintBro",
     "loginTitle": "Welcome back",
     "loginSubtitle": "Sign in to access your saved tools and history",
     "signupTitle": "Create your account",
@@ -62,15 +62,15 @@
   },
   "faq": {
     "q1": "Are these tools free to use?",
-    "a1": "Yes, all tools on ToolNest are completely free to use, with no hidden charges.",
+    "a1": "Yes, all tools on PrintBro are completely free to use, with no hidden charges.",
     "q2": "Is my data safe?",
     "a2": "Most tools process your files directly in your browser, so your files never leave your device.",
     "q3": "Do I need to create an account?",
     "a3": "No account is required to use the tools, but signing up lets you save your history and preferences.",
     "q4": "Which file formats are supported?",
     "a4": "We support JPG, PNG and PDF conversions, merging, page deletion, cropping and resizing, with more formats coming soon.",
-    "q5": "Can I use ToolNest on my phone?",
-    "a5": "Yes, ToolNest is fully responsive and works great on mobile, tablet and desktop."
+    "q5": "Can I use PrintBro on my phone?",
+    "a5": "Yes, PrintBro is fully responsive and works great on mobile, tablet and desktop."
   },
   "footer": {
     "rights": "All rights reserved."
