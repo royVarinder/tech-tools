@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "node scripts/with-env.mjs node_modules/next/dist/bin/next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "node scripts/with-env.mjs node_modules/next/dist/bin/next start",
     "lint": "eslint",
     "seed": "node scripts/seed-tools.mjs && node scripts/seed-home-content.mjs",
     "seed:tools": "node scripts/seed-tools.mjs",
