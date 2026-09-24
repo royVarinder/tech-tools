@@ -109,8 +109,8 @@ export default function UsersTable({ initialUsers }: { initialUsers: AdminUser[]
                   onClick={() => toggleIsPro(user)}
                   className={
                     user.isPro
-                      ? "rounded-full bg-brand-light px-3 py-1 text-xs font-semibold text-brand-bright"
-                      : "rounded-full border border-border px-3 py-1 text-xs text-muted"
+                      ? "rounded-lg bg-brand-light px-3 py-1 text-xs font-semibold text-brand-bright"
+                      : "rounded-lg border border-border px-3 py-1 text-xs text-muted"
                   }
                 >
                   {user.isPro ? "Pro" : "Free"}

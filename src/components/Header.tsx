@@ -95,7 +95,7 @@ export default function Header() {
             <button
               type="button"
               onClick={() => setToolsOpen((v) => !v)}
-              className="flex items-center gap-1 rounded-full px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-surface-soft"
+              className="flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-surface-soft"
             >
               {t("tools")}
               {toolsOpen ? <FcUp className="h-4 w-4" /> : <FcDown className="h-4 w-4" />}
@@ -162,7 +162,7 @@ export default function Header() {
               <select
                 value={locale}
                 onChange={(e) => switchLocale(e.target.value)}
-                className="rounded-full border border-border bg-surface py-2 pl-8 pr-3 text-sm text-foreground"
+                className="rounded-lg border border-border bg-surface py-2 pl-8 pr-3 text-sm text-foreground"
                 aria-label="Language"
               >
                 {locales.map((l) => (
@@ -180,7 +180,7 @@ export default function Header() {
                 {!session.user.isPro && (
                   <Link
                     href="/pro"
-                    className="rounded-full border border-brand-light px-3 py-2 text-sm font-medium text-brand-bright transition-colors hover:bg-surface-soft"
+                    className="rounded-lg border border-brand-light px-3 py-2 text-sm font-medium text-brand-bright transition-colors hover:bg-surface-soft"
                   >
                     {t("goPro")}
                   </Link>
@@ -191,7 +191,7 @@ export default function Header() {
                 <button
                   type="button"
                   onClick={() => signOut()}
-                  className="flex items-center gap-1.5 rounded-full border border-border px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-surface-soft"
+                  className="flex items-center gap-1.5 rounded-lg border border-border px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-surface-soft"
                 >
                   <FcLeave className="h-4 w-4" />
                   <span>Log out</span>
@@ -201,7 +201,7 @@ export default function Header() {
               <>
                 <Link
                   href="/login"
-                  className="rounded-full px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-surface-soft"
+                  className="rounded-lg px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-surface-soft"
                 >
                   {t("login")}
                 </Link>
@@ -291,7 +291,7 @@ export default function Header() {
               <select
                 value={locale}
                 onChange={(e) => switchLocale(e.target.value)}
-                className="w-full rounded-full border border-border bg-surface py-2 pl-8 pr-3 text-sm text-foreground"
+                className="w-full rounded-lg border border-border bg-surface py-2 pl-8 pr-3 text-sm text-foreground"
                 aria-label="Language"
               >
                 {locales.map((l) => (
@@ -311,7 +311,7 @@ export default function Header() {
                   <Link
                     href="/pro"
                     onClick={() => setDrawerOpen(false)}
-                    className="block rounded-full border border-brand-light px-3 py-2 text-center text-sm font-medium text-brand-bright transition-colors hover:bg-surface-soft"
+                    className="block rounded-lg border border-brand-light px-3 py-2 text-center text-sm font-medium text-brand-bright transition-colors hover:bg-surface-soft"
                   >
                     {t("goPro")}
                   </Link>
@@ -326,7 +326,7 @@ export default function Header() {
                       setDrawerOpen(false);
                       signOut();
                     }}
-                    className="flex items-center gap-1.5 rounded-full border border-border px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-surface-soft"
+                    className="flex items-center gap-1.5 rounded-lg border border-border px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-surface-soft"
                   >
                     <FcLeave className="h-4 w-4" />
                     <span>Log out</span>
@@ -338,7 +338,7 @@ export default function Header() {
                 <Link
                   href="/login"
                   onClick={() => setDrawerOpen(false)}
-                  className="rounded-full px-3 py-2 text-center text-sm font-medium text-foreground transition-colors hover:bg-surface-soft"
+                  className="rounded-lg px-3 py-2 text-center text-sm font-medium text-foreground transition-colors hover:bg-surface-soft"
                 >
                   {t("login")}
                 </Link>

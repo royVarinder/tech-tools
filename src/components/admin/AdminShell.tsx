@@ -41,7 +41,7 @@ export default function AdminShell({
           <button
             type="button"
             onClick={() => signOut({ callbackUrl: "/admin/login" })}
-            className="rounded-full border border-border px-3 py-1.5 text-sm font-medium text-foreground transition-colors hover:bg-surface-soft"
+            className="rounded-lg border border-border px-3 py-1.5 text-sm font-medium text-foreground transition-colors hover:bg-surface-soft"
           >
             Log out
           </button>
