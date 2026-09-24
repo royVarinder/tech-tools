@@ -11,24 +11,26 @@ const intlMiddleware = createMiddleware(routing);
 export default auth((request: NextAuthRequest, event: NextFetchEvent) => {
   const response = intlMiddleware(request);
 
-  const pathname = request.nextUrl.pathname;
-  const firstSegment = pathname.split("/")[1];
-  const locale = (locales as readonly string[]).includes(firstSegment) ? firstSegment : undefined;
+  if (request.auth?.user?.role !== "admin") {
+    const pathname = request.nextUrl.pathname;
+    const firstSegment = pathname.split("/")[1];
+    const locale = (locales as readonly string[]).includes(firstSegment) ? firstSegment : undefined;
 
-  event.waitUntil(
-    recordVisit(getClientIp(request), {
-      path: pathname,
-      locale,
-      userId: request.auth?.user?.id,
-      email: request.auth?.user?.email ?? undefined,
-      userAgent: request.headers.get("user-agent") ?? undefined,
-      referer: request.headers.get("referer") ?? undefined,
-    })
-  );
+    event.waitUntil(
+      recordVisit(getClientIp(request), {
+        path: pathname,
+        locale,
+        userId: request.auth?.user?.id,
+        email: request.auth?.user?.email ?? undefined,
+        userAgent: request.headers.get("user-agent") ?? undefined,
+        referer: request.headers.get("referer") ?? undefined,
+      })
+    );
+  }
 
   return response;
 });
 
 export const config = {
-  matcher: ["/((?!api|_next|_vercel|.*\\..*).*)"],
+  matcher: ["/((?!api|admin|_next|_vercel|.*\\..*).*)"],
 };
