@@ -205,9 +205,14 @@ async function seed() {
   }
   console.log(`Upserted ${SERVICES.length} services.`);
 
-  await Faq.deleteMany({});
-  await Faq.insertMany(FAQS.map((f) => ({ ...f, active: true })));
-  console.log(`Inserted ${FAQS.length} FAQs.`);
+  for (const faq of FAQS) {
+    await Faq.findOneAndUpdate(
+      { question: faq.question },
+      { $set: { ...faq, active: true } },
+      { upsert: true }
+    );
+  }
+  console.log(`Upserted ${FAQS.length} FAQs.`);
 
   console.log("Home content seeding complete.");
   await mongoose.disconnect();

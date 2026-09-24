@@ -4,7 +4,7 @@ import { auth } from "@/auth";
 import { connectToDatabase } from "@/lib/mongodb";
 import User from "@/models/User";
 import ProApplication from "@/models/ProApplication";
-import { sendAdminNotification } from "@/lib/mail";
+import { sendAdminNotification, escapeHtml } from "@/lib/mail";
 
 const applySchema = z.object({
   reason: z.string().min(10).max(1000),
@@ -48,10 +48,13 @@ export async function POST(request: Request) {
     status: "pending",
   });
 
-  const origin = new URL(request.url).origin;
+  const origin = process.env.NEXTAUTH_URL || new URL(request.url).origin;
+  const safeName = escapeHtml(user.name);
+  const safeEmail = escapeHtml(user.email);
+  const safeReason = escapeHtml(parsed.data.reason);
   await sendAdminNotification({
     subject: `New Pro application from ${user.name}`,
-    html: `<p><strong>${user.name}</strong> (${user.email}) applied for Pro access.</p><p>Reason: ${parsed.data.reason}</p><p><a href="${origin}/admin/pro-applications">Review in admin panel</a></p>`,
+    html: `<p><strong>${safeName}</strong> (${safeEmail}) applied for Pro access.</p><p>Reason: ${safeReason}</p><p><a href="${origin}/admin/pro-applications">Review in admin panel</a></p>`,
   });
 
   return NextResponse.json({ success: true }, { status: 201 });

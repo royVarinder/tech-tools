@@ -2,6 +2,15 @@ import { Resend } from "resend";
 import { connectToDatabase } from "@/lib/mongodb";
 import Admin from "@/models/Admin";
 
+export function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 export async function sendAdminNotification({
   subject,
   html,

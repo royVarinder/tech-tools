@@ -16,20 +16,25 @@ export default function ProApplyForm() {
     setError(null);
     setSubmitting(true);
 
-    const res = await fetch("/api/pro/apply", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ reason }),
-    });
-    const data = await res.json().catch(() => ({}));
+    try {
+      const res = await fetch("/api/pro/apply", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ reason }),
+      });
+      const data = await res.json().catch(() => ({}));
 
-    if (!res.ok) {
-      setError(data.error || t("genericError"));
+      if (!res.ok) {
+        setError(data.error || t("genericError"));
+        setSubmitting(false);
+        return;
+      }
+
+      router.refresh();
+    } catch {
+      setError(t("genericError"));
       setSubmitting(false);
-      return;
     }
-
-    router.refresh();
   }
 
   return (
