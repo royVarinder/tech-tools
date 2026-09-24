@@ -9,6 +9,7 @@ export interface ServiceDoc {
   title: string;
   badge: ServiceBadge;
   href: string | null;
+  externalUrl: string | null;
   order: number;
   active: boolean;
 }
@@ -20,6 +21,7 @@ const ServiceSchema = new Schema<ServiceDoc>(
     title: { type: String, required: true },
     badge: { type: String, enum: ["NEW", "HOT", null], default: null },
     href: { type: String, default: null },
+    externalUrl: { type: String, default: null },
     order: { type: Number, required: true, default: 0 },
     active: { type: Boolean, required: true, default: true },
   },

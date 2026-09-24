@@ -5,10 +5,11 @@ interface ServiceCardProps {
   title: string;
   badge: "NEW" | "HOT" | null;
   href: string | null;
+  externalUrl: string | null;
   icon: React.ReactNode;
 }
 
-export default function ServiceCard({ title, badge, href, icon }: ServiceCardProps) {
+export default function ServiceCard({ title, badge, href, externalUrl, icon }: ServiceCardProps) {
   const content = (
     <>
       <ServiceBadge badge={badge} />
@@ -19,12 +20,20 @@ export default function ServiceCard({ title, badge, href, icon }: ServiceCardPro
     </>
   );
 
+  const cardClass =
+    "brand-card group relative flex flex-col items-start gap-3 p-4 transition-all duration-200 hover:-translate-y-1 hover:border-brand-light hover:shadow-[0_12px_24px_-12px_var(--color-brand)]";
+
+  if (externalUrl) {
+    return (
+      <a href={externalUrl} target="_blank" rel="noopener noreferrer" className={cardClass}>
+        {content}
+      </a>
+    );
+  }
+
   if (href) {
     return (
-      <Link
-        href={href}
-        className="brand-card group relative flex flex-col items-start gap-3 p-4 transition-all duration-200 hover:-translate-y-1 hover:border-brand-light hover:shadow-[0_12px_24px_-12px_var(--color-brand)]"
-      >
+      <Link href={href} className={cardClass}>
         {content}
       </Link>
     );

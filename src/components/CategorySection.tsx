@@ -34,6 +34,7 @@ export default function CategorySection({ category }: { category: CategoryView }
             title={item.title}
             badge={item.badge}
             href={item.href}
+            externalUrl={item.externalUrl}
             icon={resolveIcon(category.slug, item.href)}
           />
         ))}

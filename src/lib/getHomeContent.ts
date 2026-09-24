@@ -9,6 +9,7 @@ export interface ServiceView {
   title: string;
   badge: ServiceBadge;
   href: string | null;
+  externalUrl: string | null;
 }
 
 export interface CategoryView {
@@ -39,6 +40,7 @@ function staticFallback(): HomeContent {
         title: item.title,
         badge: item.badge,
         href: item.href,
+        externalUrl: null,
       })),
     })),
     faqs: HOME_FAQS.map((faq) => ({ question: faq.question, answer: faq.answer })),
@@ -70,6 +72,7 @@ export async function getHomeContent(): Promise<HomeContent> {
           title: service.title,
           badge: service.badge as ServiceBadge,
           href: service.href,
+          externalUrl: service.externalUrl ?? null,
         })),
     }));
 
