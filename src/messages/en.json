@@ -103,7 +103,8 @@
     "photo-crop-resize": { "name": "Photo Crop & Resize", "description": "Crop and resize your photos to any dimension." },
     "resume-maker": { "name": "Resume Maker", "description": "Build a professional resume and download it as PDF." },
     "passport-photo": { "name": "Passport Photo Maker", "description": "Crop your photo to passport, PAN or custom size and download a ready-to-print sheet." },
-    "id-card-print": { "name": "ID Card Print", "description": "Upload your ID card front & back and print a ready-to-cut sheet with multiple copies." }
+    "id-card-print": { "name": "ID Card Print", "description": "Upload your ID card front & back and print a ready-to-cut sheet with multiple copies." },
+    "pro-resume-maker": { "name": "Pro Resume Maker", "description": "Choose from premium resume templates and build a polished, professional resume as a PDF. Pro members only." }
   },
   "common": {
     "back": "Back to tools",

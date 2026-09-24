@@ -18,4 +18,5 @@ export const TOOL_DEFINITIONS: ToolDefinition[] = [
   { slug: "resume-maker", category: "document", icon: "file-text", order: 8 },
   { slug: "passport-photo", category: "image", icon: "camera-id", order: 9 },
   { slug: "id-card-print", category: "document", icon: "id-card", order: 10 },
+  { slug: "pro-resume-maker", category: "document", icon: "pro-resume-maker", order: 11 },
 ];

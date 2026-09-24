@@ -53,7 +53,7 @@ export const HOME_CATEGORIES: CategorySeed[] = [
     title: "Creative Design Studio",
     order: 1,
     items: buildItems("creative-design-studio", [
-      { title: "Pro Resume Maker", badge: "NEW" },
+      { title: "Pro Resume Maker", badge: "NEW", href: "/tools/pro-resume-maker" },
       { title: "Marriage Biodata", badge: "NEW" },
       { title: "Pro ID Maker", badge: "NEW" },
       { title: "Pro Poster Maker", badge: "NEW" },

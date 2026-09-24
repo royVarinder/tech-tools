@@ -2,6 +2,9 @@ import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { FcLeft } from "react-icons/fc";
 import { Link } from "@/i18n/navigation";
+import { auth } from "@/auth";
+import { connectToDatabase } from "@/lib/mongodb";
+import User from "@/models/User";
 import { TOOL_DEFINITIONS } from "@/lib/toolsRegistry";
 import ToolIcon from "@/components/ToolIcon";
 import RecordToolUsage from "@/components/tools/RecordToolUsage";
@@ -14,12 +17,13 @@ import PhotoCropResize from "@/components/tools/PhotoCropResize";
 import ResumeMaker from "@/components/tools/ResumeMaker";
 import PassportPhoto from "@/components/tools/PassportPhoto";
 import IdCardPrint from "@/components/tools/IdCardPrint";
+import ProResumeMaker from "@/components/tools/ProResumeMaker";
 
 export function generateStaticParams() {
   return TOOL_DEFINITIONS.map((tool) => ({ slug: tool.slug }));
 }
 
-function renderTool(slug: string) {
+async function renderTool(slug: string) {
   switch (slug) {
     case "jpg-to-pdf":
       return <ImageToPdf format="jpg" />;
@@ -41,6 +45,17 @@ function renderTool(slug: string) {
       return <PassportPhoto />;
     case "id-card-print":
       return <IdCardPrint />;
+    case "pro-resume-maker": {
+      const session = await auth();
+      const isLoggedIn = Boolean(session?.user?.id);
+      let isPro = false;
+      if (isLoggedIn) {
+        await connectToDatabase();
+        const user = await User.findById(session!.user.id).lean();
+        isPro = Boolean(user?.isPro);
+      }
+      return <ProResumeMaker isPro={isPro} isLoggedIn={isLoggedIn} />;
+    }
     default:
       return null;
   }
@@ -57,7 +72,7 @@ export default async function ToolPage({
 
   const t = await getTranslations({ locale, namespace: "tools" });
   const tCommon = await getTranslations({ locale, namespace: "common" });
-  const toolUi = renderTool(slug);
+  const toolUi = await renderTool(slug);
   if (!toolUi) notFound();
 
   return (

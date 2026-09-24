@@ -23,6 +23,7 @@ const icons: Record<string, IconType> = {
   "resume-maker": FcDocument,
   "passport-photo": FcCameraIdentification,
   "id-card-print": FcBusinessContact,
+  "pro-resume-maker": FcDocument,
 };
 
 export default function ToolIcon({ slug, className }: { slug: string; className?: string }) {

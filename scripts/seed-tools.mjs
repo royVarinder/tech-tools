@@ -29,6 +29,7 @@ const TOOL_DEFINITIONS = [
   { slug: "merge-pdf", category: "pdf", icon: "files", order: 6 },
   { slug: "photo-crop-resize", category: "image", icon: "crop", order: 7 },
   { slug: "resume-maker", category: "document", icon: "file-text", order: 8 },
+  { slug: "pro-resume-maker", category: "document", icon: "pro-resume-maker", order: 11 },
 ];
 
 async function seed() {
