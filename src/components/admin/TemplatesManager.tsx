@@ -1,6 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { RESUME_LAYOUT_KEYS } from "@/lib/resumeTemplateStyles";
+
+const KNOWN_LAYOUT_KEYS: Record<string, string[]> = {
+  "pro-resume-maker": RESUME_LAYOUT_KEYS,
+};
 
 interface AdminTemplate {
   id: string;
@@ -87,13 +92,29 @@ export default function TemplatesManager({ initialTemplates }: { initialTemplate
           placeholder="Name"
           className="brand-input px-3 py-2 text-sm"
         />
-        <input
-          required
-          value={form.layoutKey}
-          onChange={(e) => setForm((f) => ({ ...f, layoutKey: e.target.value }))}
-          placeholder="layoutKey (e.g. classic)"
-          className="brand-input px-3 py-2 text-sm"
-        />
+        {KNOWN_LAYOUT_KEYS[form.toolSlug] ? (
+          <select
+            required
+            value={form.layoutKey}
+            onChange={(e) => setForm((f) => ({ ...f, layoutKey: e.target.value }))}
+            className="brand-input px-3 py-2 text-sm"
+          >
+            <option value="">layoutKey...</option>
+            {KNOWN_LAYOUT_KEYS[form.toolSlug].map((key) => (
+              <option key={key} value={key}>
+                {key}
+              </option>
+            ))}
+          </select>
+        ) : (
+          <input
+            required
+            value={form.layoutKey}
+            onChange={(e) => setForm((f) => ({ ...f, layoutKey: e.target.value }))}
+            placeholder="layoutKey (e.g. classic)"
+            className="brand-input px-3 py-2 text-sm"
+          />
+        )}
         <input
           value={form.description}
           onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}

@@ -5,6 +5,7 @@ import { Link } from "@/i18n/navigation";
 import { FcEmptyTrash } from "react-icons/fc";
 import { downloadBlob, bytesToBlob } from "@/lib/download";
 import { generateResumePdf, type ResumeExperienceEntry, type ResumeEducationEntry } from "@/lib/generateResumePdf";
+import { getResumeTemplateStyle } from "@/lib/resumeTemplateStyles";
 import Modal from "@/components/Modal";
 import TemplatePicker from "@/components/tools/TemplatePicker";
 
@@ -24,6 +25,7 @@ export default function ProResumeMaker({ isPro, isLoggedIn }: { isPro: boolean; 
   const [experience, setExperience] = useState<ResumeExperienceEntry[]>([{ ...emptyExperience }]);
   const [education, setEducation] = useState<ResumeEducationEntry[]>([{ ...emptyEducation }]);
   const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   if (!isLoggedIn || !isPro) {
     return (
@@ -55,12 +57,17 @@ export default function ProResumeMaker({ isPro, isLoggedIn }: { isPro: boolean; 
   async function handleGenerate() {
     if (!layoutKey) return;
     setBusy(true);
+    setError(null);
     try {
       const pdfBytes = await generateResumePdf(
         { name, title, email, phone, location, summary, skills: skillList, experience, education },
         layoutKey
       );
       downloadBlob(bytesToBlob(pdfBytes, "application/pdf"), `${name || "resume"}.pdf`);
+    } catch {
+      setError(
+        "Couldn't generate the PDF. This template's fonts don't support some of the characters you typed (e.g. Devanagari or Gurmukhi script) — try switching those fields to English for now."
+      );
     } finally {
       setBusy(false);
     }
@@ -174,6 +181,8 @@ export default function ProResumeMaker({ isPro, isLoggedIn }: { isPro: boolean; 
           <Input label="Comma-separated skills" value={skills} onChange={setSkills} placeholder="React, Node.js, Figma" />
         </Section>
 
+        {error && <p className="text-sm text-danger">{error}</p>}
+
         <button
           type="button"
           disabled={busy}
@@ -188,10 +197,91 @@ export default function ProResumeMaker({ isPro, isLoggedIn }: { isPro: boolean; 
         <p className="mb-2 text-center text-xs font-medium uppercase tracking-wide text-muted">
           Template: {layoutKey}
         </p>
-        <div className="flex aspect-[210/297] w-full items-center justify-center rounded-lg bg-white p-8 text-slate-400 shadow-2xl ring-1 ring-black/10">
-          Preview generated in the downloaded PDF
+        <ResumePreview
+          layoutKey={layoutKey}
+          name={name}
+          title={title}
+          email={email}
+          phone={phone}
+          location={location}
+          summary={summary}
+        />
+      </div>
+    </div>
+  );
+}
+
+function ResumePreview({
+  layoutKey,
+  name,
+  title,
+  email,
+  phone,
+  location,
+  summary,
+}: {
+  layoutKey: string | null;
+  name: string;
+  title: string;
+  email: string;
+  phone: string;
+  location: string;
+  summary: string;
+}) {
+  const style = layoutKey ? getResumeTemplateStyle(layoutKey) : null;
+  const contactLine = [email, phone, location].filter(Boolean).join("  •  ");
+  const fontClass = style?.fontFamily === "TimesRoman" ? "font-serif" : "font-sans";
+
+  if (!style) {
+    return <div className="aspect-[210/297] w-full rounded-lg bg-white shadow-2xl ring-1 ring-black/10" />;
+  }
+
+  if (style.headerStyle === "sidebar") {
+    return (
+      <div className={`flex aspect-[210/297] w-full overflow-hidden rounded-lg shadow-2xl ring-1 ring-black/10 ${fontClass}`}>
+        <div className="w-2/5 p-4 text-white" style={{ backgroundColor: style.accentColorCss }}>
+          <p className="text-sm font-bold">{name || "Your Name"}</p>
+          {title && <p className="mt-1 text-[10px] opacity-90">{title}</p>}
+          <p className="mt-4 text-[9px] font-bold uppercase opacity-90">Contact</p>
+          <p className="mt-1 text-[9px] leading-snug opacity-80">{contactLine || "email · phone · location"}</p>
+        </div>
+        <div className="flex-1 bg-white p-4">
+          <p className="text-xs text-slate-600">{summary || "Your professional summary appears here."}</p>
         </div>
       </div>
+    );
+  }
+
+  if (style.headerStyle === "banner") {
+    return (
+      <div className={`aspect-[210/297] w-full overflow-hidden rounded-lg bg-white shadow-2xl ring-1 ring-black/10 ${fontClass}`}>
+        <div
+          className="flex flex-col justify-center px-6"
+          style={{ backgroundColor: style.accentColorCss, height: `${Math.round((style.bannerHeight / 842) * 100)}%` }}
+        >
+          <p className="text-lg font-bold text-white">{name || "Your Name"}</p>
+          {title && <p className="text-xs text-white/90">{title}</p>}
+        </div>
+        <div className="p-4">
+          {contactLine && <p className="text-[10px] text-slate-500">{contactLine}</p>}
+          <p className="mt-2 text-xs text-slate-600">{summary || "Your professional summary appears here."}</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className={`aspect-[210/297] w-full overflow-hidden rounded-lg bg-white p-6 shadow-2xl ring-1 ring-black/10 ${fontClass}`}>
+      <p className="text-lg font-bold" style={{ color: style.accentColorCss }}>
+        {name || "Your Name"}
+      </p>
+      {title && (
+        <p className="text-sm" style={{ color: style.accentColorCss }}>
+          {title}
+        </p>
+      )}
+      <p className="mt-1 text-[10px] text-slate-500">{contactLine}</p>
+      <p className="mt-4 text-xs text-slate-600">{summary || "Your professional summary appears here."}</p>
     </div>
   );
 }

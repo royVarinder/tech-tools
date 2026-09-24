@@ -5,6 +5,9 @@ export interface ResumeTemplateStyle {
   fontFamily: "Helvetica" | "TimesRoman";
   columns: 1 | 2;
   headerStyle: "minimal" | "banner" | "sidebar";
+  bannerHeight: number;
+  bannerNameSize: number;
+  spacingScale: number;
 }
 
 export const RESUME_TEMPLATE_STYLES: Record<string, ResumeTemplateStyle> = {
@@ -15,6 +18,9 @@ export const RESUME_TEMPLATE_STYLES: Record<string, ResumeTemplateStyle> = {
     fontFamily: "TimesRoman",
     columns: 1,
     headerStyle: "minimal",
+    bannerHeight: 90,
+    bannerNameSize: 24,
+    spacingScale: 1,
   },
   "modern-blue": {
     layoutKey: "modern-blue",
@@ -23,6 +29,9 @@ export const RESUME_TEMPLATE_STYLES: Record<string, ResumeTemplateStyle> = {
     fontFamily: "Helvetica",
     columns: 1,
     headerStyle: "banner",
+    bannerHeight: 90,
+    bannerNameSize: 24,
+    spacingScale: 1,
   },
   minimalist: {
     layoutKey: "minimalist",
@@ -31,6 +40,9 @@ export const RESUME_TEMPLATE_STYLES: Record<string, ResumeTemplateStyle> = {
     fontFamily: "Helvetica",
     columns: 1,
     headerStyle: "minimal",
+    bannerHeight: 90,
+    bannerNameSize: 24,
+    spacingScale: 1.35,
   },
   "sidebar-dark": {
     layoutKey: "sidebar-dark",
@@ -39,6 +51,9 @@ export const RESUME_TEMPLATE_STYLES: Record<string, ResumeTemplateStyle> = {
     fontFamily: "Helvetica",
     columns: 2,
     headerStyle: "sidebar",
+    bannerHeight: 90,
+    bannerNameSize: 24,
+    spacingScale: 1,
   },
   "bold-header": {
     layoutKey: "bold-header",
@@ -47,6 +62,9 @@ export const RESUME_TEMPLATE_STYLES: Record<string, ResumeTemplateStyle> = {
     fontFamily: "Helvetica",
     columns: 1,
     headerStyle: "banner",
+    bannerHeight: 130,
+    bannerNameSize: 30,
+    spacingScale: 1,
   },
   "elegant-green": {
     layoutKey: "elegant-green",
@@ -55,8 +73,13 @@ export const RESUME_TEMPLATE_STYLES: Record<string, ResumeTemplateStyle> = {
     fontFamily: "TimesRoman",
     columns: 1,
     headerStyle: "minimal",
+    bannerHeight: 90,
+    bannerNameSize: 24,
+    spacingScale: 1.15,
   },
 };
+
+export const RESUME_LAYOUT_KEYS = Object.keys(RESUME_TEMPLATE_STYLES);
 
 export function getResumeTemplateStyle(layoutKey: string): ResumeTemplateStyle {
   return RESUME_TEMPLATE_STYLES[layoutKey] ?? RESUME_TEMPLATE_STYLES.classic;
