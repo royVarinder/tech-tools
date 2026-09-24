@@ -177,6 +177,14 @@ export default function Header() {
 
             {status === "authenticated" && session?.user ? (
               <div className="flex items-center gap-2">
+                {!session.user.isPro && (
+                  <Link
+                    href="/pro"
+                    className="rounded-full border border-brand-light px-3 py-2 text-sm font-medium text-brand-bright transition-colors hover:bg-surface-soft"
+                  >
+                    {t("goPro")}
+                  </Link>
+                )}
                 <span className="text-sm font-medium text-foreground">
                   {session.user.name}
                 </span>
@@ -298,21 +306,32 @@ export default function Header() {
 
           <div className="border-t border-border pt-4">
             {status === "authenticated" && session?.user ? (
-              <div className="flex items-center justify-between gap-2">
-                <span className="text-sm font-medium text-foreground">
-                  {session.user.name}
-                </span>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setDrawerOpen(false);
-                    signOut();
-                  }}
-                  className="flex items-center gap-1.5 rounded-full border border-border px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-surface-soft"
-                >
-                  <FcLeave className="h-4 w-4" />
-                  <span>Log out</span>
-                </button>
+              <div className="space-y-3">
+                {!session.user.isPro && (
+                  <Link
+                    href="/pro"
+                    onClick={() => setDrawerOpen(false)}
+                    className="block rounded-full border border-brand-light px-3 py-2 text-center text-sm font-medium text-brand-bright transition-colors hover:bg-surface-soft"
+                  >
+                    {t("goPro")}
+                  </Link>
+                )}
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-sm font-medium text-foreground">
+                    {session.user.name}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setDrawerOpen(false);
+                      signOut();
+                    }}
+                    className="flex items-center gap-1.5 rounded-full border border-border px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-surface-soft"
+                  >
+                    <FcLeave className="h-4 w-4" />
+                    <span>Log out</span>
+                  </button>
+                </div>
               </div>
             ) : (
               <div className="flex flex-col gap-2">
