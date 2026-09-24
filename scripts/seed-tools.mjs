@@ -1,4 +1,11 @@
+import { existsSync } from "node:fs";
 import mongoose from "mongoose";
+
+for (const envFile of [".env", ".env.local"]) {
+  if (existsSync(envFile)) {
+    process.loadEnvFile(envFile);
+  }
+}
 
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/toolnest";
 
@@ -26,7 +33,7 @@ const TOOL_DEFINITIONS = [
 
 async function seed() {
   console.log(`Connecting to ${MONGODB_URI} ...`);
-  await mongoose.connect(MONGODB_URI);
+  await mongoose.connect(MONGODB_URI, { dbName: "toolnest" });
   const Tool = mongoose.models.Tool || mongoose.model("Tool", ToolSchema);
 
   for (const def of TOOL_DEFINITIONS) {
