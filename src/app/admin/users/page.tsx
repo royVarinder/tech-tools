@@ -15,6 +15,7 @@ export default async function AdminUsersPage() {
     name: user.name,
     email: user.email,
     recentToolsCount: user.recentTools?.length ?? 0,
+    isPro: user.isPro,
   }));
 
   return (

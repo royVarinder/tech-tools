@@ -7,6 +7,7 @@ interface AdminUser {
   name: string;
   email: string;
   recentToolsCount: number;
+  isPro: boolean;
 }
 
 export default function UsersTable({ initialUsers }: { initialUsers: AdminUser[] }) {
@@ -39,6 +40,21 @@ export default function UsersTable({ initialUsers }: { initialUsers: AdminUser[]
     setEditingId(null);
   }
 
+  async function toggleIsPro(user: AdminUser) {
+    setError(null);
+    const res = await fetch(`/api/admin/users/${user.id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ isPro: !user.isPro }),
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      setError(data.error || "Failed to update Pro status.");
+      return;
+    }
+    setUsers((prev) => prev.map((u) => (u.id === user.id ? { ...u, isPro: data.isPro } : u)));
+  }
+
   async function deleteUser(id: string) {
     if (!confirm("Delete this user? This cannot be undone.")) return;
     const res = await fetch(`/api/admin/users/${id}`, { method: "DELETE" });
@@ -52,12 +68,13 @@ export default function UsersTable({ initialUsers }: { initialUsers: AdminUser[]
   return (
     <div className="mt-6 overflow-x-auto">
       {error && <p className="mb-3 text-sm text-danger">{error}</p>}
-      <table className="w-full min-w-[600px] border-collapse text-sm">
+      <table className="w-full min-w-[700px] border-collapse text-sm">
         <thead>
           <tr className="border-b border-border text-left text-muted">
             <th className="py-2 pr-4">Name</th>
             <th className="py-2 pr-4">Email</th>
             <th className="py-2 pr-4">Recent tools</th>
+            <th className="py-2 pr-4">Pro</th>
             <th className="py-2 pr-4">Actions</th>
           </tr>
         </thead>
@@ -88,6 +105,18 @@ export default function UsersTable({ initialUsers }: { initialUsers: AdminUser[]
               </td>
               <td className="py-2 pr-4">{user.recentToolsCount}</td>
               <td className="py-2 pr-4">
+                <button
+                  onClick={() => toggleIsPro(user)}
+                  className={
+                    user.isPro
+                      ? "rounded-full bg-brand-light px-3 py-1 text-xs font-semibold text-brand-bright"
+                      : "rounded-full border border-border px-3 py-1 text-xs text-muted"
+                  }
+                >
+                  {user.isPro ? "Pro" : "Free"}
+                </button>
+              </td>
+              <td className="py-2 pr-4">
                 {editingId === user.id ? (
                   <div className="flex gap-2">
                     <button onClick={() => saveEdit(user.id)} className="text-brand-bright hover:underline">
@@ -112,7 +141,7 @@ export default function UsersTable({ initialUsers }: { initialUsers: AdminUser[]
           ))}
           {users.length === 0 && (
             <tr>
-              <td colSpan={4} className="py-4 text-center text-muted">
+              <td colSpan={5} className="py-4 text-center text-muted">
                 No users yet.
               </td>
             </tr>
