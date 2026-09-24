@@ -171,6 +171,12 @@ const FAQS = [
     answer: "Yes, PrintBro is fully responsive and works great on mobile, tablet and desktop.",
     order: 4,
   },
+  {
+    question: "How do I get Pro access?",
+    answer:
+      "Log in to your account, then visit the \"Go Pro\" link in the header and submit a short application explaining why you'd like Pro access. Our admin team reviews every application, and your account is automatically upgraded to Pro as soon as it's approved.",
+    order: 5,
+  },
 ];
 
 async function seed() {
