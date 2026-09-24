@@ -31,7 +31,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const valid = await bcrypt.compare(password, user.passwordHash);
         if (!valid) return null;
 
-        return { id: user._id.toString(), name: user.name, email: user.email };
+        return { id: user._id.toString(), name: user.name, email: user.email, isPro: user.isPro };
       },
     }),
     Credentials({
@@ -62,6 +62,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (user) {
         token.id = user.id;
         token.role = account?.provider === "admin-login" ? "admin" : "user";
+        token.isPro = (user as { isPro?: boolean }).isPro ?? false;
       }
       return token;
     },
@@ -69,6 +70,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (session.user && token.id) {
         session.user.id = token.id as string;
         session.user.role = (token.role as "user" | "admin") ?? "user";
+        session.user.isPro = (token.isPro as boolean) ?? false;
       }
       return session;
     },

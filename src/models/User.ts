@@ -11,6 +11,8 @@ export interface UserDoc {
   email: string;
   passwordHash: string;
   recentTools: RecentToolEntry[];
+  isPro: boolean;
+  proSince: Date | null;
 }
 
 const RecentToolSchema = new Schema<RecentToolEntry>(
@@ -27,6 +29,8 @@ const UserSchema = new Schema<UserDoc>(
     email: { type: String, required: true, unique: true, lowercase: true, trim: true },
     passwordHash: { type: String, required: true },
     recentTools: { type: [RecentToolSchema], required: true, default: [] },
+    isPro: { type: Boolean, required: true, default: false },
+    proSince: { type: Date, default: null },
   },
   { timestamps: true }
 );
