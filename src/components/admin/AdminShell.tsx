@@ -10,6 +10,7 @@ const NAV_ITEMS = [
   { href: "/admin/visitors", label: "Visitors" },
   { href: "/admin/portal-links", label: "Portal Links" },
   { href: "/admin/faqs", label: "FAQs" },
+  { href: "/admin/templates", label: "Templates" },
 ];
 
 export default function AdminShell({

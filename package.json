@@ -11,6 +11,7 @@
     "seed:tools": "node scripts/seed-tools.mjs",
     "seed:content": "node scripts/seed-home-content.mjs",
     "seed:admin": "node scripts/seed-admin.mjs",
+    "seed:templates": "node scripts/seed-templates.mjs",
     "migrate:toolnest": "node scripts/migrate-test-to-toolnest.mjs"
   },
   "dependencies": {
