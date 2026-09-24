@@ -7,7 +7,8 @@
     "searchPlaceholder": "Search tools...",
     "tools": "Tools",
     "login": "Log in",
-    "join": "Join free"
+    "join": "Join free",
+    "goPro": "Go Pro"
   },
   "home": {
     "heroTitle": "Every tool to manage your files, free & online",
@@ -71,6 +72,23 @@
     "a4": "We support JPG, PNG and PDF conversions, merging, page deletion, cropping and resizing, with more formats coming soon.",
     "q5": "Can I use PrintBro on my phone?",
     "a5": "Yes, PrintBro is fully responsive and works great on mobile, tablet and desktop."
+  },
+  "pro": {
+    "loginRequiredTitle": "Log in to apply for Pro",
+    "loginRequiredSubtitle": "Create a free account or log in to apply for Pro access.",
+    "loginCta": "Log in",
+    "alreadyProTitle": "You're a Pro member",
+    "alreadyProSubtitle": "Pro member since {date}. Enjoy full access to the Creative Design Studio tools.",
+    "pendingTitle": "Application pending review",
+    "pendingSubtitle": "Our admin team is reviewing your application. We'll upgrade your account once it's approved.",
+    "formTitle": "Apply for Pro",
+    "formSubtitle": "Tell us why you'd like Pro access and we'll review your application.",
+    "reasonLabel": "Why do you want Pro access?",
+    "reasonPlaceholder": "Tell us a bit about how you plan to use Pro tools...",
+    "submitButton": "Submit application",
+    "submitting": "Submitting...",
+    "rejectedNotice": "Your previous application wasn't approved. You're welcome to apply again.",
+    "genericError": "Something went wrong. Please try again."
   },
   "footer": {
     "rights": "All rights reserved."
