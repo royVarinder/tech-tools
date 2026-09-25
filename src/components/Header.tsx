@@ -14,6 +14,20 @@ interface ToolItem {
   slug: string;
 }
 
+interface ServiceItem {
+  slug: string;
+  title: string;
+  href: string | null;
+  externalUrl: string | null;
+}
+
+interface SearchResult {
+  key: string;
+  title: string;
+  href: string | null;
+  externalUrl: string | null;
+}
+
 export default function Header() {
   const t = useTranslations("header");
   const tTools = useTranslations("tools");
@@ -23,6 +37,7 @@ export default function Header() {
   const { data: session, status } = useSession();
 
   const [tools, setTools] = useState<ToolItem[]>([]);
+  const [services, setServices] = useState<ServiceItem[]>([]);
   const [toolsOpen, setToolsOpen] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [query, setQuery] = useState("");
@@ -34,6 +49,11 @@ export default function Header() {
       .then((res) => res.json())
       .then((data) => setTools(data))
       .catch(() => setTools([]));
+
+    fetch("/api/services")
+      .then((res) => res.json())
+      .then((data) => setServices(data))
+      .catch(() => setServices([]));
   }, []);
 
   useEffect(() => {
@@ -71,6 +91,27 @@ export default function Header() {
           .includes(query.toLowerCase())
       )
     : tools;
+
+  const filteredServices = query
+    ? services.filter((service) => service.title.toLowerCase().includes(query.toLowerCase()))
+    : [];
+
+  const searchResults: SearchResult[] = query
+    ? [
+        ...filteredTools.map((tool) => ({
+          key: `tool-${tool.slug}`,
+          title: tTools(`${tool.slug}.name` as never),
+          href: `/tools/${tool.slug}`,
+          externalUrl: null,
+        })),
+        ...filteredServices.map((service) => ({
+          key: `service-${service.slug}`,
+          title: service.title,
+          href: service.href,
+          externalUrl: service.externalUrl,
+        })),
+      ]
+    : [];
 
   function switchLocale(next: string) {
     router.replace(pathname, { locale: next });
@@ -141,18 +182,30 @@ export default function Header() {
                   : "pointer-events-none -translate-y-1 scale-95 opacity-0"
               }`}
             >
-              {filteredTools.length === 0 && (
-                <p className="px-3 py-2 text-sm text-dim">No tools found</p>
+              {searchResults.length === 0 && (
+                <p className="px-3 py-2 text-sm text-dim">No results found</p>
               )}
-              {filteredTools.map((tool) => (
-                <Link
-                  key={tool.slug}
-                  href={`/tools/${tool.slug}`}
-                  className="block rounded-xl px-3 py-2 text-sm text-foreground transition-colors hover:bg-surface-soft hover:text-brand-bright"
-                >
-                  {tTools(`${tool.slug}.name` as never)}
-                </Link>
-              ))}
+              {searchResults.map((result) =>
+                result.externalUrl ? (
+                  <a
+                    key={result.key}
+                    href={result.externalUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block rounded-xl px-3 py-2 text-sm text-foreground transition-colors hover:bg-surface-soft hover:text-brand-bright"
+                  >
+                    {result.title}
+                  </a>
+                ) : (
+                  <Link
+                    key={result.key}
+                    href={result.href ?? "#"}
+                    className="block rounded-xl px-3 py-2 text-sm text-foreground transition-colors hover:bg-surface-soft hover:text-brand-bright"
+                  >
+                    {result.title}
+                  </Link>
+                )
+              )}
             </div>
           </div>
 
@@ -284,6 +337,39 @@ export default function Header() {
               </Link>
             ))}
           </div>
+
+          {query && filteredServices.length > 0 && (
+            <>
+              <p className="mb-2 px-1 text-xs font-semibold uppercase tracking-wide text-dim">
+                Portal Services
+              </p>
+              <div className="mb-4 grid grid-cols-1 gap-1">
+                {filteredServices.map((service) =>
+                  service.externalUrl ? (
+                    <a
+                      key={service.slug}
+                      href={service.externalUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => setDrawerOpen(false)}
+                      className="rounded-xl px-3 py-2 text-sm text-foreground transition-colors hover:bg-surface-soft"
+                    >
+                      {service.title}
+                    </a>
+                  ) : (
+                    <Link
+                      key={service.slug}
+                      href={service.href ?? "#"}
+                      onClick={() => setDrawerOpen(false)}
+                      className="rounded-xl px-3 py-2 text-sm text-foreground transition-colors hover:bg-surface-soft"
+                    >
+                      {service.title}
+                    </Link>
+                  )
+                )}
+              </div>
+            </>
+          )}
 
           <div className="mb-4 flex items-center justify-between gap-2">
             <div className="relative flex-1">

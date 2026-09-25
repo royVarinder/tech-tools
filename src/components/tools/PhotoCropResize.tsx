@@ -6,6 +6,10 @@ import "react-image-crop/dist/ReactCrop.css";
 import { useTranslations } from "next-intl";
 import FileDropzone from "./FileDropzone";
 import { downloadBlob } from "@/lib/download";
+import { canvasToJpgBlob, compressToTargetBytes } from "@/lib/printSheet";
+
+type ResizeUnit = "px" | "percent";
+type SizeUnit = "KB" | "MB";
 
 export default function PhotoCropResize() {
   const t = useTranslations("common");
@@ -13,6 +17,11 @@ export default function PhotoCropResize() {
   const [crop, setCrop] = useState<Crop>();
   const [width, setWidth] = useState(800);
   const [height, setHeight] = useState(600);
+  const [resizeUnit, setResizeUnit] = useState<ResizeUnit>("px");
+  const [widthPercent, setWidthPercent] = useState(100);
+  const [heightPercent, setHeightPercent] = useState(100);
+  const [targetSize, setTargetSize] = useState<number | "">("");
+  const [targetSizeUnit, setTargetSizeUnit] = useState<SizeUnit>("KB");
   const [busy, setBusy] = useState(false);
   const [fileName, setFileName] = useState("photo");
   const imgRef = useRef<HTMLImageElement | null>(null);
@@ -43,10 +52,12 @@ export default function PhotoCropResize() {
       const image = imgRef.current;
       const scaleX = image.naturalWidth / image.width;
       const scaleY = image.naturalHeight / image.height;
+      const croppedWidth = crop.width * scaleX;
+      const croppedHeight = crop.height * scaleY;
 
       const cropCanvas = document.createElement("canvas");
-      cropCanvas.width = crop.width * scaleX;
-      cropCanvas.height = crop.height * scaleY;
+      cropCanvas.width = croppedWidth;
+      cropCanvas.height = croppedHeight;
       const cropCtx = cropCanvas.getContext("2d");
       if (!cropCtx) return;
 
@@ -54,30 +65,35 @@ export default function PhotoCropResize() {
         image,
         crop.x * scaleX,
         crop.y * scaleY,
-        crop.width * scaleX,
-        crop.height * scaleY,
+        croppedWidth,
+        croppedHeight,
         0,
         0,
         cropCanvas.width,
         cropCanvas.height
       );
 
+      const outWidth =
+        resizeUnit === "percent" ? Math.max(1, Math.round((croppedWidth * widthPercent) / 100)) : width;
+      const outHeight =
+        resizeUnit === "percent" ? Math.max(1, Math.round((croppedHeight * heightPercent) / 100)) : height;
+
       const outCanvas = document.createElement("canvas");
-      outCanvas.width = width;
-      outCanvas.height = height;
+      outCanvas.width = outWidth;
+      outCanvas.height = outHeight;
       const outCtx = outCanvas.getContext("2d");
       if (!outCtx) return;
-      outCtx.drawImage(cropCanvas, 0, 0, width, height);
+      outCtx.drawImage(cropCanvas, 0, 0, outWidth, outHeight);
 
-      outCanvas.toBlob(
-        (blob) => {
-          if (blob) downloadBlob(blob, `${fileName}-${width}x${height}.jpg`);
-          setBusy(false);
-        },
-        "image/jpeg",
-        0.92
-      );
+      const blob =
+        targetSize && targetSize > 0
+          ? await compressToTargetBytes(outCanvas, targetSize * (targetSizeUnit === "MB" ? 1024 * 1024 : 1024))
+          : await canvasToJpgBlob(outCanvas, 0.92);
+
+      downloadBlob(blob, `${fileName}-${outWidth}x${outHeight}.jpg`);
     } catch {
+      // ignore
+    } finally {
       setBusy(false);
     }
   }
@@ -97,25 +113,89 @@ export default function PhotoCropResize() {
 
           <div className="flex flex-wrap items-end gap-4">
             <div>
-              <label className="mb-1 block text-sm font-medium text-foreground">Width (px)</label>
-              <input
-                type="number"
-                value={width}
-                min={1}
-                onChange={(e) => setWidth(Number(e.target.value))}
-                className="w-28 rounded-lg border border-border px-3 py-2 text-sm"
-              />
+              <label className="mb-1 block text-sm font-medium text-foreground">Resize by</label>
+              <select
+                value={resizeUnit}
+                onChange={(e) => setResizeUnit(e.target.value as ResizeUnit)}
+                className="rounded-lg border border-border px-3 py-2 text-sm"
+              >
+                <option value="px">Pixels</option>
+                <option value="percent">Percentage</option>
+              </select>
             </div>
+
+            {resizeUnit === "px" ? (
+              <>
+                <div>
+                  <label className="mb-1 block text-sm font-medium text-foreground">Width (px)</label>
+                  <input
+                    type="number"
+                    value={width}
+                    min={1}
+                    onChange={(e) => setWidth(Number(e.target.value))}
+                    className="w-28 rounded-lg border border-border px-3 py-2 text-sm"
+                  />
+                </div>
+                <div>
+                  <label className="mb-1 block text-sm font-medium text-foreground">Height (px)</label>
+                  <input
+                    type="number"
+                    value={height}
+                    min={1}
+                    onChange={(e) => setHeight(Number(e.target.value))}
+                    className="w-28 rounded-lg border border-border px-3 py-2 text-sm"
+                  />
+                </div>
+              </>
+            ) : (
+              <>
+                <div>
+                  <label className="mb-1 block text-sm font-medium text-foreground">Width (%)</label>
+                  <input
+                    type="number"
+                    value={widthPercent}
+                    min={1}
+                    max={500}
+                    onChange={(e) => setWidthPercent(Number(e.target.value))}
+                    className="w-28 rounded-lg border border-border px-3 py-2 text-sm"
+                  />
+                </div>
+                <div>
+                  <label className="mb-1 block text-sm font-medium text-foreground">Height (%)</label>
+                  <input
+                    type="number"
+                    value={heightPercent}
+                    min={1}
+                    max={500}
+                    onChange={(e) => setHeightPercent(Number(e.target.value))}
+                    className="w-28 rounded-lg border border-border px-3 py-2 text-sm"
+                  />
+                </div>
+              </>
+            )}
+
             <div>
-              <label className="mb-1 block text-sm font-medium text-foreground">Height (px)</label>
-              <input
-                type="number"
-                value={height}
-                min={1}
-                onChange={(e) => setHeight(Number(e.target.value))}
-                className="w-28 rounded-lg border border-border px-3 py-2 text-sm"
-              />
+              <label className="mb-1 block text-sm font-medium text-foreground">Compress to (optional)</label>
+              <div className="flex gap-2">
+                <input
+                  type="number"
+                  value={targetSize}
+                  min={1}
+                  placeholder="e.g. 200"
+                  onChange={(e) => setTargetSize(e.target.value === "" ? "" : Number(e.target.value))}
+                  className="w-24 rounded-lg border border-border px-3 py-2 text-sm"
+                />
+                <select
+                  value={targetSizeUnit}
+                  onChange={(e) => setTargetSizeUnit(e.target.value as SizeUnit)}
+                  className="rounded-lg border border-border px-3 py-2 text-sm"
+                >
+                  <option value="KB">KB</option>
+                  <option value="MB">MB</option>
+                </select>
+              </div>
             </div>
+
             <button
               type="button"
               onClick={() => setImgSrc(null)}

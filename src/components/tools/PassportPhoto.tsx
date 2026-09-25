@@ -6,9 +6,11 @@ import "react-image-crop/dist/ReactCrop.css";
 import { useTranslations } from "next-intl";
 import FileDropzone from "./FileDropzone";
 import { downloadBlob } from "@/lib/download";
-import { canvasToJpgBlob, inToPx, mmToPx, tileOnSheet } from "@/lib/printSheet";
+import { canvasToJpgBlob, compressToTargetBytes, inToPx, mmToPx, tileOnSheet } from "@/lib/printSheet";
 
 type PresetKey = "india" | "pan" | "us" | "custom";
+type ResizeUnit = "px" | "percent";
+type SizeUnit = "KB" | "MB";
 
 const PRESETS: Record<Exclude<PresetKey, "custom">, { label: string; widthMm: number; heightMm: number }> = {
   india: { label: "India Passport (35 x 45mm)", widthMm: 35, heightMm: 45 },
@@ -27,6 +29,12 @@ export default function PassportPhoto() {
   const [customWidth, setCustomWidth] = useState(35);
   const [customHeight, setCustomHeight] = useState(45);
   const [customUnit, setCustomUnit] = useState<"mm" | "in">("mm");
+  const [resizeUnit, setResizeUnit] = useState<ResizeUnit>("px");
+  const [widthOverridePx, setWidthOverridePx] = useState<number | null>(null);
+  const [heightOverridePx, setHeightOverridePx] = useState<number | null>(null);
+  const [scalePercent, setScalePercent] = useState(100);
+  const [targetSize, setTargetSize] = useState<number | "">("");
+  const [targetSizeUnit, setTargetSizeUnit] = useState<SizeUnit>("KB");
   const [busy, setBusy] = useState(false);
   const [fileName, setFileName] = useState("passport-photo");
   const imgRef = useRef<HTMLImageElement | null>(null);
@@ -34,6 +42,10 @@ export default function PassportPhoto() {
   const targetWidthMm = preset === "custom" ? (customUnit === "in" ? customWidth * 25.4 : customWidth) : PRESETS[preset].widthMm;
   const targetHeightMm = preset === "custom" ? (customUnit === "in" ? customHeight * 25.4 : customHeight) : PRESETS[preset].heightMm;
   const aspect = targetWidthMm / targetHeightMm;
+  const baseWidthPx = mmToPx(targetWidthMm);
+  const baseHeightPx = mmToPx(targetHeightMm);
+  const outputWidthPx = widthOverridePx ?? baseWidthPx;
+  const outputHeightPx = heightOverridePx ?? baseHeightPx;
 
   function resetCropToAspect() {
     const image = imgRef.current;
@@ -62,8 +74,14 @@ export default function PassportPhoto() {
     const scaleX = image.naturalWidth / image.width;
     const scaleY = image.naturalHeight / image.height;
 
-    const targetW = mmToPx(targetWidthMm);
-    const targetH = mmToPx(targetHeightMm);
+    const targetW =
+      resizeUnit === "percent"
+        ? Math.max(1, Math.round((baseWidthPx * scalePercent) / 100))
+        : Math.max(1, Math.round(outputWidthPx));
+    const targetH =
+      resizeUnit === "percent"
+        ? Math.max(1, Math.round((baseHeightPx * scalePercent) / 100))
+        : Math.max(1, Math.round(outputHeightPx));
 
     const canvas = document.createElement("canvas");
     canvas.width = targetW;
@@ -85,12 +103,19 @@ export default function PassportPhoto() {
     return canvas;
   }
 
+  async function exportBlob(canvas: HTMLCanvasElement): Promise<Blob> {
+    if (targetSize && targetSize > 0) {
+      return compressToTargetBytes(canvas, targetSize * (targetSizeUnit === "MB" ? 1024 * 1024 : 1024));
+    }
+    return canvasToJpgBlob(canvas);
+  }
+
   async function downloadPhoto() {
     const canvas = getCroppedCanvas();
     if (!canvas) return;
     setBusy(true);
     try {
-      const blob = await canvasToJpgBlob(canvas);
+      const blob = await exportBlob(canvas);
       downloadBlob(blob, `${fileName}-passport.jpg`);
     } finally {
       setBusy(false);
@@ -108,7 +133,7 @@ export default function PassportPhoto() {
         itemWidthPx: canvas.width,
         itemHeightPx: canvas.height,
       });
-      const blob = await canvasToJpgBlob(sheet);
+      const blob = await exportBlob(sheet);
       downloadBlob(blob, `${fileName}-passport-sheet.jpg`);
     } finally {
       setBusy(false);
@@ -139,7 +164,11 @@ export default function PassportPhoto() {
               <label className="mb-1 block text-sm font-medium text-foreground">Photo size</label>
               <select
                 value={preset}
-                onChange={(e) => setPreset(e.target.value as PresetKey)}
+                onChange={(e) => {
+                  setPreset(e.target.value as PresetKey);
+                  setWidthOverridePx(null);
+                  setHeightOverridePx(null);
+                }}
                 className="rounded-lg border border-border px-3 py-2 text-sm"
               >
                 <option value="india">{PRESETS.india.label}</option>
@@ -157,7 +186,11 @@ export default function PassportPhoto() {
                     type="number"
                     min={1}
                     value={customWidth}
-                    onChange={(e) => setCustomWidth(Number(e.target.value))}
+                    onChange={(e) => {
+                      setCustomWidth(Number(e.target.value));
+                      setWidthOverridePx(null);
+                      setHeightOverridePx(null);
+                    }}
                     className="w-24 rounded-lg border border-border px-3 py-2 text-sm"
                   />
                 </div>
@@ -167,7 +200,11 @@ export default function PassportPhoto() {
                     type="number"
                     min={1}
                     value={customHeight}
-                    onChange={(e) => setCustomHeight(Number(e.target.value))}
+                    onChange={(e) => {
+                      setCustomHeight(Number(e.target.value));
+                      setWidthOverridePx(null);
+                      setHeightOverridePx(null);
+                    }}
                     className="w-24 rounded-lg border border-border px-3 py-2 text-sm"
                   />
                 </div>
@@ -175,7 +212,11 @@ export default function PassportPhoto() {
                   <label className="mb-1 block text-sm font-medium text-foreground">Unit</label>
                   <select
                     value={customUnit}
-                    onChange={(e) => setCustomUnit(e.target.value as "mm" | "in")}
+                    onChange={(e) => {
+                      setCustomUnit(e.target.value as "mm" | "in");
+                      setWidthOverridePx(null);
+                      setHeightOverridePx(null);
+                    }}
                     className="rounded-lg border border-border px-3 py-2 text-sm"
                   >
                     <option value="mm">mm</option>
@@ -184,6 +225,77 @@ export default function PassportPhoto() {
                 </div>
               </>
             )}
+
+            <div>
+              <label className="mb-1 block text-sm font-medium text-foreground">Resize by</label>
+              <select
+                value={resizeUnit}
+                onChange={(e) => setResizeUnit(e.target.value as ResizeUnit)}
+                className="rounded-lg border border-border px-3 py-2 text-sm"
+              >
+                <option value="px">Pixels</option>
+                <option value="percent">Percentage</option>
+              </select>
+            </div>
+
+            {resizeUnit === "px" ? (
+              <>
+                <div>
+                  <label className="mb-1 block text-sm font-medium text-foreground">Output width (px)</label>
+                  <input
+                    type="number"
+                    min={1}
+                    value={outputWidthPx}
+                    onChange={(e) => setWidthOverridePx(Number(e.target.value))}
+                    className="w-28 rounded-lg border border-border px-3 py-2 text-sm"
+                  />
+                </div>
+                <div>
+                  <label className="mb-1 block text-sm font-medium text-foreground">Output height (px)</label>
+                  <input
+                    type="number"
+                    min={1}
+                    value={outputHeightPx}
+                    onChange={(e) => setHeightOverridePx(Number(e.target.value))}
+                    className="w-28 rounded-lg border border-border px-3 py-2 text-sm"
+                  />
+                </div>
+              </>
+            ) : (
+              <div>
+                <label className="mb-1 block text-sm font-medium text-foreground">Scale (%)</label>
+                <input
+                  type="number"
+                  min={1}
+                  max={500}
+                  value={scalePercent}
+                  onChange={(e) => setScalePercent(Number(e.target.value))}
+                  className="w-24 rounded-lg border border-border px-3 py-2 text-sm"
+                />
+              </div>
+            )}
+
+            <div>
+              <label className="mb-1 block text-sm font-medium text-foreground">Compress to (optional)</label>
+              <div className="flex gap-2">
+                <input
+                  type="number"
+                  value={targetSize}
+                  min={1}
+                  placeholder="e.g. 50"
+                  onChange={(e) => setTargetSize(e.target.value === "" ? "" : Number(e.target.value))}
+                  className="w-24 rounded-lg border border-border px-3 py-2 text-sm"
+                />
+                <select
+                  value={targetSizeUnit}
+                  onChange={(e) => setTargetSizeUnit(e.target.value as SizeUnit)}
+                  className="rounded-lg border border-border px-3 py-2 text-sm"
+                >
+                  <option value="KB">KB</option>
+                  <option value="MB">MB</option>
+                </select>
+              </div>
+            </div>
 
             <button
               type="button"

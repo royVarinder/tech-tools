@@ -18,6 +18,32 @@ export function canvasToJpgBlob(canvas: HTMLCanvasElement, quality = 0.92): Prom
   });
 }
 
+/**
+ * Binary-searches JPEG quality so the exported blob lands at or under `targetBytes`.
+ * Falls back to the lowest-quality attempt if even that can't fit the target.
+ */
+export async function compressToTargetBytes(canvas: HTMLCanvasElement, targetBytes: number): Promise<Blob> {
+  let lo = 0.05;
+  let hi = 1;
+  let best: Blob | null = null;
+  let smallest: Blob | null = null;
+
+  for (let i = 0; i < 8; i++) {
+    const mid = (lo + hi) / 2;
+    const blob = await canvasToJpgBlob(canvas, mid);
+    if (!smallest || blob.size < smallest.size) smallest = blob;
+
+    if (blob.size <= targetBytes) {
+      best = blob;
+      lo = mid;
+    } else {
+      hi = mid;
+    }
+  }
+
+  return best ?? smallest ?? canvasToJpgBlob(canvas, 0.05);
+}
+
 /** Draws `image` centered inside a boxW x boxH box, scaled to fit without cropping, on a white background. */
 export function drawContain(
   image: CanvasImageSource & { naturalWidth?: number; naturalHeight?: number; width?: number; height?: number },

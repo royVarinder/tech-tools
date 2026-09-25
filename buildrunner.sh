@@ -1,1 +1,1 @@
-git fetch origin && git pull origin && rm -rf .next/ && npm run build && pm2 reload 3
+git fetch origin && git pull origin && rm -rf .next/ && npm install && npm run build && pm2 reload 3
