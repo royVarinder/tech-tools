@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import { FcBriefcase } from "react-icons/fc";
 import { auth } from "@/auth";
 import { getRecentTools } from "@/lib/getRecentTools";
 import { getHomeContent, type HomeContent } from "@/lib/getHomeContent";
@@ -8,6 +9,7 @@ import CategorySection from "@/components/CategorySection";
 import AboutSection from "@/components/AboutSection";
 import WhyChooseSection from "@/components/WhyChooseSection";
 import FAQ from "@/components/FAQ";
+import HeroFeatureCarousel from "@/components/HeroFeatureCarousel";
 
 export default async function HomePage() {
   const [content, session] = await Promise.all([getHomeContent(), auth()]);
@@ -56,6 +58,21 @@ function HomeSections({
               </Link>
             )}
           </div>
+
+          <HeroFeatureCarousel
+            prevLabel={t("carouselPrev")}
+            nextLabel={t("carouselNext")}
+            slides={[
+              {
+                icon: <FcBriefcase className="h-7 w-7" />,
+                badge: t("carouselJobsBadge"),
+                title: t("carouselJobsTitle"),
+                description: t("carouselJobsDescription"),
+                ctaLabel: t("carouselJobsCta"),
+                ctaHref: "/jobs",
+              },
+            ]}
+          />
         </div>
       </section>
 

@@ -35,7 +35,7 @@ export const HOME_CATEGORIES: CategorySeed[] = [
     title: "Essential & Services",
     order: 0,
     items: buildItems("essential-services", [
-      { title: "Latest Jobs", badge: "NEW" },
+      { title: "Latest Jobs", badge: "NEW", href: "/jobs" },
       { title: "Mock Test", badge: "NEW" },
       { title: "ID Card Print", badge: "NEW", href: "/tools/id-card-print" },
       { title: "PVC Auto Crop", badge: "NEW" },

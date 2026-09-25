@@ -21,7 +21,13 @@
     "recentSubheading": "Jump back into a tool you've already used",
     "toolsHeading": "All Tools",
     "toolsSubheading": "Pick a tool to get started",
-    "faqHeading": "Frequently Asked Questions"
+    "faqHeading": "Frequently Asked Questions",
+    "carouselJobsBadge": "NEW",
+    "carouselJobsTitle": "Latest Jobs — Explore by State",
+    "carouselJobsDescription": "Government & public sector job notifications. Search by keyword, filter by state, and apply directly.",
+    "carouselJobsCta": "Explore Jobs",
+    "carouselPrev": "Previous slide",
+    "carouselNext": "Next slide"
   },
   "about": {
     "title": "PrintBro — One Stop Solution For All Your Digital Work",
@@ -112,5 +118,28 @@
     "download": "Download",
     "processing": "Processing...",
     "reset": "Start over"
+  },
+  "jobs": {
+    "pageTitle": "Latest Jobs",
+    "pageSubtitle": "Government & public sector job notifications, updated regularly.",
+    "searchPlaceholder": "Search by title, board, qualification...",
+    "stateLabel": "State",
+    "allStates": "All States",
+    "dateLabel": "Posted on",
+    "postsLabel": "Posts",
+    "boardLabel": "Board",
+    "qualificationLabel": "Qualification",
+    "advtNoLabel": "Advt No",
+    "postDateLabel": "Post Date",
+    "lastDateLabel": "Last Date",
+    "closingToday": "Closing Today",
+    "applyNow": "Apply Now",
+    "noJobs": "No jobs found.",
+    "search": "Search",
+    "resetFilters": "Reset",
+    "previous": "Previous",
+    "next": "Next",
+    "pageOf": "Page {page} of {total}",
+    "showing": "Showing {from}-{to} of {total}"
   }
 }

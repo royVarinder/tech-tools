@@ -21,7 +21,13 @@
     "recentSubheading": "ਜਿਸ ਟੂਲ ਨੂੰ ਤੁਸੀਂ ਪਹਿਲਾਂ ਵਰਤ ਚੁੱਕੇ ਹੋ ਉੱਥੋਂ ਵਾਪਸ ਜਾਓ",
     "toolsHeading": "ਸਾਰੇ ਟੂਲ",
     "toolsSubheading": "ਸ਼ੁਰੂ ਕਰਨ ਲਈ ਇੱਕ ਟੂਲ ਚੁਣੋ",
-    "faqHeading": "ਅਕਸਰ ਪੁੱਛੇ ਜਾਂਦੇ ਸਵਾਲ"
+    "faqHeading": "ਅਕਸਰ ਪੁੱਛੇ ਜਾਂਦੇ ਸਵਾਲ",
+    "carouselJobsBadge": "ਨਵਾਂ",
+    "carouselJobsTitle": "ਨਵੀਨਤਮ ਨੌਕਰੀਆਂ — ਰਾਜ ਅਨੁਸਾਰ ਵੇਖੋ",
+    "carouselJobsDescription": "ਸਰਕਾਰੀ ਅਤੇ ਜਨਤਕ ਖੇਤਰ ਦੀਆਂ ਨੌਕਰੀ ਸੂਚਨਾਵਾਂ। ਕੀਵਰਡ ਨਾਲ ਖੋਜੋ, ਰਾਜ ਅਨੁਸਾਰ ਫਿਲਟਰ ਕਰੋ, ਅਤੇ ਸਿੱਧਾ ਅਪਲਾਈ ਕਰੋ।",
+    "carouselJobsCta": "ਨੌਕਰੀਆਂ ਵੇਖੋ",
+    "carouselPrev": "ਪਿਛਲੀ ਸਲਾਈਡ",
+    "carouselNext": "ਅਗਲੀ ਸਲਾਈਡ"
   },
   "about": {
     "title": "PrintBro — ਤੁਹਾਡੇ ਸਾਰੇ ਡਿਜੀਟਲ ਕੰਮਾਂ ਦਾ ਇੱਕੋ ਹੱਲ",
@@ -112,5 +118,28 @@
     "download": "ਡਾਊਨਲੋਡ ਕਰੋ",
     "processing": "ਪ੍ਰੋਸੈਸ ਹੋ ਰਿਹਾ ਹੈ...",
     "reset": "ਦੁਬਾਰਾ ਸ਼ੁਰੂ ਕਰੋ"
+  },
+  "jobs": {
+    "pageTitle": "ਨਵੀਨਤਮ ਨੌਕਰੀਆਂ",
+    "pageSubtitle": "ਸਰਕਾਰੀ ਅਤੇ ਜਨਤਕ ਖੇਤਰ ਦੀਆਂ ਨੌਕਰੀ ਸੂਚਨਾਵਾਂ, ਨਿਯਮਿਤ ਤੌਰ 'ਤੇ ਅੱਪਡੇਟ ਹੁੰਦੀਆਂ ਹਨ।",
+    "searchPlaceholder": "ਸਿਰਲੇਖ, ਬੋਰਡ, ਯੋਗਤਾ ਨਾਲ ਖੋਜੋ...",
+    "stateLabel": "ਰਾਜ",
+    "allStates": "ਸਾਰੇ ਰਾਜ",
+    "dateLabel": "ਪੋਸਟ ਮਿਤੀ",
+    "postsLabel": "ਪਦ",
+    "boardLabel": "ਬੋਰਡ",
+    "qualificationLabel": "ਯੋਗਤਾ",
+    "advtNoLabel": "ਇਸ਼ਤਿਹਾਰ ਨੰਬਰ",
+    "postDateLabel": "ਪੋਸਟ ਮਿਤੀ",
+    "lastDateLabel": "ਆਖਰੀ ਮਿਤੀ",
+    "closingToday": "ਅੱਜ ਆਖਰੀ ਮਿਤੀ",
+    "applyNow": "ਹੁਣੇ ਅਪਲਾਈ ਕਰੋ",
+    "noJobs": "ਕੋਈ ਨੌਕਰੀ ਨਹੀਂ ਮਿਲੀ।",
+    "search": "ਖੋਜੋ",
+    "resetFilters": "ਰੀਸੈੱਟ ਕਰੋ",
+    "previous": "ਪਿਛਲਾ",
+    "next": "ਅਗਲਾ",
+    "pageOf": "ਪੰਨਾ {page} / {total}",
+    "showing": "{total} ਵਿੱਚੋਂ {from}-{to} ਦਿਖਾਇਆ ਜਾ ਰਿਹਾ ਹੈ"
   }
 }

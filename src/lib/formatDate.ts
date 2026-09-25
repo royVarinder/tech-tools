@@ -17,6 +17,8 @@ const dateFormatter = new Intl.DateTimeFormat("en-IN", {
   year: "numeric",
 });
 
+const dayKeyFormatter = new Intl.DateTimeFormat("en-CA", { timeZone: IST_TIME_ZONE });
+
 /** Formats a date/ISO string as "DD MMM YYYY, hh:mm am/pm" in India Standard Time. */
 export function formatIST(value: string | Date): string {
   const date = value instanceof Date ? value : new Date(value);
@@ -27,4 +29,10 @@ export function formatIST(value: string | Date): string {
 export function formatISTDate(value: string | Date): string {
   const date = value instanceof Date ? value : new Date(value);
   return dateFormatter.format(date);
+}
+
+/** Returns true if the given date/ISO string falls on today's India Standard Time calendar day. */
+export function isTodayIST(value: string | Date): boolean {
+  const date = value instanceof Date ? value : new Date(value);
+  return dayKeyFormatter.format(date) === dayKeyFormatter.format(new Date());
 }

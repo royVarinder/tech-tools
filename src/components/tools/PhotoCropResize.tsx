@@ -35,13 +35,24 @@ export default function PhotoCropResize() {
     reader.readAsDataURL(file);
   }
 
+  const pxAspect = width > 0 && height > 0 ? width / height : undefined;
+
+  function resetCropToAspect(targetAspect: number | undefined) {
+    const image = imgRef.current;
+    if (!image) return;
+    const { width: w, height: h } = image;
+    setCrop(
+      targetAspect
+        ? centerCrop(makeAspectCrop({ unit: "%", width: 90 }, targetAspect, w, h), w, h)
+        : centerCrop({ unit: "%", width: 90, height: 90, x: 5, y: 5 }, w, h)
+    );
+  }
+
   function onImageLoad(e: React.SyntheticEvent<HTMLImageElement>) {
     const { width: w, height: h } = e.currentTarget;
-    const initial = centerCrop(
-      makeAspectCrop({ unit: "%", width: 90 }, width / height, w, h),
-      w,
-      h
-    );
+    const initial = pxAspect
+      ? centerCrop(makeAspectCrop({ unit: "%", width: 90 }, pxAspect, w, h), w, h)
+      : centerCrop({ unit: "%", width: 90, height: 90, x: 5, y: 5 }, w, h);
     setCrop(initial);
   }
 
@@ -105,18 +116,27 @@ export default function PhotoCropResize() {
       {imgSrc && (
         <div className="space-y-6">
           <div className="overflow-auto rounded-xl border border-border bg-surface p-4">
-            <ReactCrop crop={crop} onChange={(c) => setCrop(c)}>
+            <ReactCrop crop={crop} aspect={resizeUnit === "px" ? pxAspect : undefined} onChange={(c) => setCrop(c)}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img ref={imgRef} src={imgSrc} alt="to crop" onLoad={onImageLoad} className="max-h-[480px]" />
             </ReactCrop>
           </div>
+          {resizeUnit === "px" && (
+            <p className="text-xs text-muted">
+              The crop box is locked to the {width}×{height} ratio so the preview always matches your download.
+            </p>
+          )}
 
           <div className="flex flex-wrap items-end gap-4">
             <div>
               <label className="mb-1 block text-sm font-medium text-foreground">Resize by</label>
               <select
                 value={resizeUnit}
-                onChange={(e) => setResizeUnit(e.target.value as ResizeUnit)}
+                onChange={(e) => {
+                  const unit = e.target.value as ResizeUnit;
+                  setResizeUnit(unit);
+                  resetCropToAspect(unit === "px" ? pxAspect : undefined);
+                }}
                 className="rounded-lg border border-border px-3 py-2 text-sm"
               >
                 <option value="px">Pixels</option>
@@ -132,7 +152,11 @@ export default function PhotoCropResize() {
                     type="number"
                     value={width}
                     min={1}
-                    onChange={(e) => setWidth(Number(e.target.value))}
+                    onChange={(e) => {
+                      const newWidth = Math.max(1, Number(e.target.value) || 1);
+                      setWidth(newWidth);
+                      resetCropToAspect(newWidth / height);
+                    }}
                     className="w-28 rounded-lg border border-border px-3 py-2 text-sm"
                   />
                 </div>
@@ -142,7 +166,11 @@ export default function PhotoCropResize() {
                     type="number"
                     value={height}
                     min={1}
-                    onChange={(e) => setHeight(Number(e.target.value))}
+                    onChange={(e) => {
+                      const newHeight = Math.max(1, Number(e.target.value) || 1);
+                      setHeight(newHeight);
+                      resetCropToAspect(width / newHeight);
+                    }}
                     className="w-28 rounded-lg border border-border px-3 py-2 text-sm"
                   />
                 </div>

@@ -21,7 +21,13 @@
     "recentSubheading": "जिस टूल का आप पहले उपयोग कर चुके हैं उस पर वापस जाएं",
     "toolsHeading": "सभी टूल्स",
     "toolsSubheading": "शुरू करने के लिए एक टूल चुनें",
-    "faqHeading": "अक्सर पूछे जाने वाले प्रश्न"
+    "faqHeading": "अक्सर पूछे जाने वाले प्रश्न",
+    "carouselJobsBadge": "नया",
+    "carouselJobsTitle": "नवीनतम नौकरियां — राज्य अनुसार देखें",
+    "carouselJobsDescription": "सरकारी व सार्वजनिक क्षेत्र की नौकरी सूचनाएं। कीवर्ड से खोजें, राज्य के अनुसार फ़िल्टर करें, और सीधे आवेदन करें।",
+    "carouselJobsCta": "नौकरियां देखें",
+    "carouselPrev": "पिछली स्लाइड",
+    "carouselNext": "अगली स्लाइड"
   },
   "about": {
     "title": "PrintBro — आपके सभी डिजिटल कामों का एक ही समाधान",
@@ -112,5 +118,28 @@
     "download": "डाउनलोड करें",
     "processing": "प्रोसेस हो रहा है...",
     "reset": "फिर से शुरू करें"
+  },
+  "jobs": {
+    "pageTitle": "नवीनतम नौकरियां",
+    "pageSubtitle": "सरकारी व सार्वजनिक क्षेत्र की नौकरी सूचनाएं, नियमित रूप से अपडेट होती हैं।",
+    "searchPlaceholder": "शीर्षक, बोर्ड, योग्यता से खोजें...",
+    "stateLabel": "राज्य",
+    "allStates": "सभी राज्य",
+    "dateLabel": "पोस्ट की तारीख",
+    "postsLabel": "पद",
+    "boardLabel": "बोर्ड",
+    "qualificationLabel": "योग्यता",
+    "advtNoLabel": "विज्ञापन संख्या",
+    "postDateLabel": "पोस्ट तिथि",
+    "lastDateLabel": "अंतिम तिथि",
+    "closingToday": "आज अंतिम तिथि",
+    "applyNow": "अभी आवेदन करें",
+    "noJobs": "कोई नौकरी नहीं मिली।",
+    "search": "खोजें",
+    "resetFilters": "रीसेट करें",
+    "previous": "पिछला",
+    "next": "अगला",
+    "pageOf": "पृष्ठ {page} / {total}",
+    "showing": "{total} में से {from}-{to} दिखाया जा रहा है"
   }
 }

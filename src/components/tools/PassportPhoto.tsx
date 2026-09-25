@@ -31,7 +31,6 @@ export default function PassportPhoto() {
   const [customUnit, setCustomUnit] = useState<"mm" | "in">("mm");
   const [resizeUnit, setResizeUnit] = useState<ResizeUnit>("px");
   const [widthOverridePx, setWidthOverridePx] = useState<number | null>(null);
-  const [heightOverridePx, setHeightOverridePx] = useState<number | null>(null);
   const [scalePercent, setScalePercent] = useState(100);
   const [targetSize, setTargetSize] = useState<number | "">("");
   const [targetSizeUnit, setTargetSizeUnit] = useState<SizeUnit>("KB");
@@ -44,8 +43,11 @@ export default function PassportPhoto() {
   const aspect = targetWidthMm / targetHeightMm;
   const baseWidthPx = mmToPx(targetWidthMm);
   const baseHeightPx = mmToPx(targetHeightMm);
+  // Output px dimensions always derive from `aspect` so the crop preview never drifts out of
+  // sync with the downloaded image — a passport photo with the wrong pixel ratio would be
+  // stretched relative to what the user framed, and would no longer match the required size.
   const outputWidthPx = widthOverridePx ?? baseWidthPx;
-  const outputHeightPx = heightOverridePx ?? baseHeightPx;
+  const outputHeightPx = Math.max(1, Math.round(outputWidthPx / aspect));
 
   function resetCropToAspect() {
     const image = imgRef.current;
@@ -167,7 +169,6 @@ export default function PassportPhoto() {
                 onChange={(e) => {
                   setPreset(e.target.value as PresetKey);
                   setWidthOverridePx(null);
-                  setHeightOverridePx(null);
                 }}
                 className="rounded-lg border border-border px-3 py-2 text-sm"
               >
@@ -189,7 +190,6 @@ export default function PassportPhoto() {
                     onChange={(e) => {
                       setCustomWidth(Number(e.target.value));
                       setWidthOverridePx(null);
-                      setHeightOverridePx(null);
                     }}
                     className="w-24 rounded-lg border border-border px-3 py-2 text-sm"
                   />
@@ -203,7 +203,6 @@ export default function PassportPhoto() {
                     onChange={(e) => {
                       setCustomHeight(Number(e.target.value));
                       setWidthOverridePx(null);
-                      setHeightOverridePx(null);
                     }}
                     className="w-24 rounded-lg border border-border px-3 py-2 text-sm"
                   />
@@ -215,7 +214,6 @@ export default function PassportPhoto() {
                     onChange={(e) => {
                       setCustomUnit(e.target.value as "mm" | "in");
                       setWidthOverridePx(null);
-                      setHeightOverridePx(null);
                     }}
                     className="rounded-lg border border-border px-3 py-2 text-sm"
                   >
@@ -246,7 +244,7 @@ export default function PassportPhoto() {
                     type="number"
                     min={1}
                     value={outputWidthPx}
-                    onChange={(e) => setWidthOverridePx(Number(e.target.value))}
+                    onChange={(e) => setWidthOverridePx(Math.max(1, Number(e.target.value) || 1))}
                     className="w-28 rounded-lg border border-border px-3 py-2 text-sm"
                   />
                 </div>
@@ -256,10 +254,17 @@ export default function PassportPhoto() {
                     type="number"
                     min={1}
                     value={outputHeightPx}
-                    onChange={(e) => setHeightOverridePx(Number(e.target.value))}
+                    onChange={(e) => {
+                      const newHeight = Math.max(1, Number(e.target.value) || 1);
+                      setWidthOverridePx(Math.max(1, Math.round(newHeight * aspect)));
+                    }}
                     className="w-28 rounded-lg border border-border px-3 py-2 text-sm"
                   />
                 </div>
+                <p className="w-full text-xs text-muted">
+                  Height is locked to the selected photo size&apos;s ratio so the download always matches the crop
+                  preview.
+                </p>
               </>
             ) : (
               <div>

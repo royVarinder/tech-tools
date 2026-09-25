@@ -135,3 +135,18 @@ button:disabled,
 [aria-disabled="true"] {
   cursor: not-allowed;
 }
+
+@keyframes danger-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-danger) 55%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 22px 6px color-mix(in srgb, var(--color-danger) 55%, transparent);
+  }
+}
+
+.glow-danger {
+  border-color: var(--color-danger) !important;
+  animation: danger-glow 1.6s ease-in-out infinite;
+}
