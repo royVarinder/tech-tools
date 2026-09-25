@@ -139,9 +139,7 @@ export default function JobsBrowser({
               className={`brand-card p-4 ${closingToday ? "glow-danger border-2" : ""}`}
             >
               <div className="flex flex-wrap items-start justify-between gap-2">
-                <h2 className="font-heading text-base font-semibold text-foreground">
-                  {job.title} — {job.posts} {t("postsLabel")}
-                </h2>
+                <h2 className="font-heading text-base font-semibold text-foreground">{job.title}</h2>
                 <div className="flex flex-wrap items-center gap-2">
                   {closingToday && (
                     <span className="flex items-center gap-1 rounded-lg bg-danger px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-white">

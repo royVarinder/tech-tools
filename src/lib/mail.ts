@@ -65,7 +65,8 @@ export async function sendJobAlertEmail(job: Pick<JobDoc, "title" | "posts" | "b
     const from = process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev";
     const safeApplyLink = job.applyLink && /^https?:\/\//i.test(job.applyLink) ? job.applyLink : null;
     const html = `
-      <h2>${escapeHtml(job.title)} — ${job.posts} Post${job.posts === 1 ? "" : "s"}</h2>
+      <h2>${escapeHtml(job.title)}</h2>
+      <p><strong>Posts:</strong> ${job.posts}</p>
       <p><strong>Board:</strong> ${escapeHtml(job.board)}</p>
       <p><strong>Qualification:</strong> ${escapeHtml(job.qualification)}</p>
       <p><strong>Advt No:</strong> ${escapeHtml(job.advtNo)}</p>
